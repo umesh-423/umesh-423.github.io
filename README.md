@@ -1,38 +1,34 @@
-# Umesh Iyer · Portfolio (Static Site)
+# Umesh Iyer · Portfolio (Static Export)
 
-Plain HTML / CSS / JavaScript. No build step, no framework, no server. Drop the files on any static host.
+This is a pre-built static export of the [Lovable](https://lovable.dev)/TanStack Start React project — pre-rendered HTML plus a hashed, bundled JS/CSS build. GitHub Pages just serves the files as-is; there's no build step or server at request time.
 
 ## Files
-- `index.html` — page markup
-- `styles.css` — all styling (light + dark theme)
-- `app.js` — theme toggle, scroll progress, typing effect, project filter, contact form
+- `index.html` — pre-rendered page markup + script/link tags for the hashed bundle
+- `assets/` — bundled, content-hashed JS and CSS (do not edit directly — these are build output)
 - `Umesh_Iyer_CV.pdf` — CV downloaded by the "Download CV" buttons
-- `favicon.ico`
+- `favicon.ico`, `og-image.png` — icons/social preview image
+- `CNAME` — custom domain (`umeshiyer.live`)
+- `.nojekyll` — tells GitHub Pages not to run Jekyll on the `assets/` folder
 
-## Run locally
-Just open `index.html` in a browser. Or serve the folder:
+## Editing content
+
+Don't hand-edit the files in this repo — they're generated output and will be overwritten by the next export. Make changes in the source Lovable/React project, then rebuild and re-export:
 
 ```bash
-# Python 3
-python -m http.server 8080
+bun run build            # or: NITRO_PRESET=node-server bun run build
+```
+
+Then regenerate the static export (pre-render `/`, copy the built `assets/`, keep `CNAME`/`.nojekyll`/CV/favicon/og-image) and push the result here.
+
+## Run locally
+
+Serve the folder with any static file server:
+
+```bash
+python3 -m http.server 8080
 # then visit http://localhost:8080
 ```
 
 ## Deploy
 
-### GitHub Pages
-1. Create a repo, push these files to the root (or a `/docs` folder).
-2. Repo → **Settings → Pages → Source: main / root** (or `/docs`). Save.
-3. Site publishes at `https://<user>.github.io/<repo>/`.
-
-### Custom domain
-1. In your DNS provider, add a `CNAME` record pointing your (sub)domain to `<user>.github.io`.
-   For an apex domain, use `A` records to GitHub Pages' IPs (`185.199.108.153`, `.109.153`, `.110.153`, `.111.153`).
-2. In the repo add a file named `CNAME` (no extension) containing your domain, e.g. `umeshiyer.com`.
-3. Repo → **Settings → Pages → Custom domain**: enter the same domain. Enable **Enforce HTTPS** once the cert provisions.
-
-### Other hosts
-Works as-is on Netlify, Vercel, Cloudflare Pages, S3, Nginx — upload the folder, no build command.
-
-## Editing content
-All content lives in `app.js` in the arrays at the top: `SKILLS`, `PROJECTS`, `EXPERIENCE`, `CERTS`, `TAGLINES`. Text-only edits (hero copy, about, contact links) live in `index.html`.
+Push to `main` — GitHub Pages (Settings → Pages → Source: `main` / root) auto-redeploys `umeshiyer.live`.
